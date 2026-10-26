@@ -215,14 +215,11 @@
       margin-bottom: 22px;
     }
     
-    .newsletter { background: var(--ink); color: white; text-align: center; padding: 48px 20px; }
-    .newsletter h2 { margin-top: 0; }
-    .newsletter p { color: #d9e0d9; font-size: 13px; }
-    .newsletter form { display: flex; max-width: 440px; margin: 22px auto 0; }
-    .newsletter input { flex: 1; min-width: 0; padding: 13px; border: 0; font: inherit; outline: none; border-radius: 4px 0 0 4px; transition: box-shadow 0.3s ease; }
-    .newsletter input:focus { box-shadow: 0 0 0 3px rgba(220, 227, 215, 0.4) inset; }
-    .newsletter button { padding: 13px 18px; border: 1px solid white; background: #dce3d7; color: var(--ink); cursor: pointer; border-radius: 0 4px 4px 0; font-weight: bold; transition: all 0.3s ease; }
-    .newsletter button:hover { background: white; color: var(--sage-dark); transform: scale(1.02); }
+    .newsletter { 
+      background: var(--ink); 
+      color: white; 
+      padding: 48px 20px; 
+    }
     
     footer { padding: 26px 0; background: #f2f0e9; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: 11px; }
@@ -278,8 +275,6 @@
       .steps { gap: 25px 14px; }
       .step img { height: 130px; }
       .ingredient-list { grid-template-columns: repeat(2,1fr); row-gap: 24px; }
-      .newsletter form { flex-direction: column; gap: 8px; }
-      .newsletter input, .newsletter button { border-radius: 4px; }
       .footer-inner { flex-direction: column; text-align: center; }
       .back-to-top { bottom: 15px; right: 15px; }
     }
@@ -411,7 +406,10 @@
         </article>
       </div>
     </section>
-<div class="klaviyo-form-TEZQMG"></div>
+
+    <!-- Klaviyo Embedded Section -->
+    <section class="newsletter reveal" id="contact">
+      <div class="klaviyo-form-TEZQMG"></div>
     </section>
   </main>
 
