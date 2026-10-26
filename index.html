@@ -26,11 +26,11 @@
     }
     a { color: inherit; transition: color 0.3s ease; }
     
-    /* Reveal Animation Classes */
+    /* Scroll Reveal Animations */
     .reveal {
       opacity: 0;
-      transform: translateY(30px);
-      transition: all 0.8s cubic-bezier(0.5, 0, 0, 1);
+      transform: translateY(28px);
+      transition: opacity 0.8s cubic-bezier(0.5, 0, 0, 1), transform 0.8s cubic-bezier(0.5, 0, 0, 1);
     }
     .reveal.active {
       opacity: 1;
@@ -129,16 +129,91 @@
     .ingredient:hover h3 { color: var(--sage-dark); }
     .ingredient p { font-size: 10px; color: var(--muted); margin: 0; }
     
+    /* Blog Tab Switcher Styles */
     .blog { padding: 55px 0; }
-    .blog-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 22px; }
-    .blog-card { border: 1px solid #e8e6de; background: white; border-radius: 8px; overflow: hidden; transition: transform 0.4s ease, box-shadow 0.4s ease; cursor: pointer; }
-    .blog-card:hover { transform: translateY(-8px); box-shadow: 0 15px 30px rgba(0,0,0,0.06); }
-    .blog-card img { width: 100%; height: 175px; object-fit: cover; display: block; transition: transform 0.6s ease; }
-    .blog-card:hover img { transform: scale(1.08); }
-    .blog-card div { padding: 18px; }
-    .blog-card h3 { font-size: 22px; margin: 5px 0 8px; transition: color 0.3s; }
-    .blog-card:hover h3 { color: var(--sage-dark); }
-    .blog-card p { font-size: 12px; color: var(--muted); margin: 0; }
+    .journal-tab-nav {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 28px;
+      border-bottom: 1px solid var(--line);
+      padding-bottom: 12px;
+      flex-wrap: wrap;
+    }
+    .journal-tab-btn {
+      background: transparent;
+      border: 1px solid transparent;
+      font-size: 13px;
+      font-weight: bold;
+      color: var(--muted);
+      padding: 9px 20px;
+      border-radius: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      letter-spacing: 0.5px;
+    }
+    .journal-tab-btn:hover {
+      color: var(--ink);
+      background: var(--cream);
+    }
+    .journal-tab-btn.active {
+      background: var(--sage-dark);
+      color: white;
+      border-color: var(--sage-dark);
+      box-shadow: 0 4px 12px rgba(64,91,79,0.2);
+    }
+
+    .journal-panel {
+      display: none;
+    }
+    .journal-panel.active {
+      display: block;
+      animation: tabFadeIn 0.45s ease;
+    }
+    @keyframes tabFadeIn {
+      from { opacity: 0; transform: translateY(12px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .journal-card {
+      display: grid;
+      grid-template-columns: 420px 1fr;
+      gap: 36px;
+      background: white;
+      border: 1px solid #e8e6de;
+      border-radius: 8px;
+      overflow: hidden;
+      align-items: center;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+      transition: box-shadow 0.3s ease;
+    }
+    .journal-card:hover {
+      box-shadow: 0 12px 30px rgba(25,54,50,0.06);
+    }
+    .journal-card img {
+      width: 100%;
+      height: 320px;
+      object-fit: cover;
+      display: block;
+      transition: transform 0.6s ease;
+    }
+    .journal-card:hover img {
+      transform: scale(1.03);
+    }
+    .journal-card-body {
+      padding: 34px 40px 34px 10px;
+    }
+    .journal-card-body h3 {
+      font-size: 30px;
+      margin: 8px 0 14px;
+      letter-spacing: -.5px;
+      color: var(--ink);
+    }
+    .journal-card-body p {
+      font-size: 14px;
+      color: var(--muted);
+      line-height: 1.7;
+      margin-bottom: 22px;
+    }
     
     .newsletter { background: var(--ink); color: white; text-align: center; padding: 48px 20px; }
     .newsletter h2 { margin-top: 0; }
@@ -190,6 +265,9 @@
       .steps { grid-template-columns: repeat(2,1fr); }
       .step img { height: 170px; }
       .ingredient-layout { grid-template-columns: 1fr; }
+      .journal-card { grid-template-columns: 1fr; gap: 0; }
+      .journal-card img { height: 220px; }
+      .journal-card-body { padding: 24px; }
     }
     @media (max-width: 520px) {
       .container { width: min(100% - 30px, 1160px); }
@@ -200,8 +278,6 @@
       .steps { gap: 25px 14px; }
       .step img { height: 130px; }
       .ingredient-list { grid-template-columns: repeat(2,1fr); row-gap: 24px; }
-      .blog-grid { grid-template-columns: 1fr; }
-      .blog-card img { height: 210px; }
       .newsletter form { flex-direction: column; gap: 8px; }
       .newsletter input, .newsletter button { border-radius: 4px; }
       .footer-inner { flex-direction: column; text-align: center; }
@@ -282,12 +358,59 @@
       </div>
     </section>
 
+    <!-- The Glow Journal: Interactive Tab Switcher -->
     <section class="container blog" id="blog">
-      <div class="section-heading reveal"><div><span class="eyebrow">The glow journal</span><h2>Little Habits, Healthier Skin</h2></div></div>
-      <div class="blog-grid">
-        <article class="blog-card reveal" style="transition-delay: 0.1s;"><img src="images/products.jpg" alt="Skincare essentials" loading="lazy"><div><span class="eyebrow">Daily care</span><h3>Build a Routine You Can Stick To</h3><p>Consistency matters more than a crowded bathroom shelf. Start simple and adjust as needed.</p></div></article>
-        <article class="blog-card reveal" style="transition-delay: 0.2s;"><img src="images/skinlisten.jpg" alt="Relaxing facial skincare" loading="lazy"><div><span class="eyebrow">Skin basics</span><h3>Listen to Your Skin</h3><p>Learn to notice dryness, sensitivity and changes in how your skin feels.</p></div></article>
-        <article class="blog-card reveal" style="transition-delay: 0.3s;"><img src="images/SPF.jpg" alt="Skincare cream and serum" loading="lazy"><div><span class="eyebrow">Sun protection</span><h3>Your Daily SPF Reminder</h3><p>Sun protection is an important part of a daytime skincare routine, in every season.</p></div></article>
+      <div class="section-heading reveal">
+        <div>
+          <span class="eyebrow">The glow journal</span>
+          <h2>Little Habits, Healthier Skin</h2>
+        </div>
+      </div>
+
+      <!-- Tab Buttons -->
+      <div class="journal-tab-nav reveal" role="tablist" aria-label="Journal topics">
+        <button class="journal-tab-btn active" role="tab" aria-selected="true" aria-controls="panel-routine" id="tab-routine">Daily Care</button>
+        <button class="journal-tab-btn" role="tab" aria-selected="false" aria-controls="panel-listen" id="tab-listen">Skin Basics</button>
+        <button class="journal-tab-btn" role="tab" aria-selected="false" aria-controls="panel-spf" id="tab-spf">Sun Protection</button>
+      </div>
+
+      <!-- Tab Panel 1: Routine -->
+      <div class="journal-panel active" id="panel-routine" role="tabpanel" aria-labelledby="tab-routine">
+        <article class="journal-card">
+          <img src="images/products.jpg" alt="Skincare essentials" loading="lazy">
+          <div class="journal-card-body">
+            <span class="eyebrow">Daily care</span>
+            <h3>Build a Routine You Can Stick To</h3>
+            <p>Consistency matters more than a crowded bathroom shelf. When your ritual is simple and intentional, it is much easier to maintain every morning and evening. Start with essentials and adjust as your skin changes.</p>
+            <a class="text-link" href="blog.html">Read full journal entry&nbsp; →</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tab Panel 2: Listen to Skin -->
+      <div class="journal-panel" id="panel-listen" role="tabpanel" aria-labelledby="tab-listen">
+        <article class="journal-card">
+          <img src="images/skinlisten.jpg" alt="Relaxing facial skincare" loading="lazy">
+          <div class="journal-card-body">
+            <span class="eyebrow">Skin basics</span>
+            <h3>Listen to Your Skin</h3>
+            <p>Learn to notice dryness, sensitivity, and subtle shifts before barrier damage sets in. Your skin responds to weather, sleep, and hydration—taking a moment to assess how it feels each morning helps you choose the right care.</p>
+            <a class="text-link" href="blog.html">Read full journal entry&nbsp; →</a>
+          </div>
+        </article>
+      </div>
+
+      <!-- Tab Panel 3: Daily SPF -->
+      <div class="journal-panel" id="panel-spf" role="tabpanel" aria-labelledby="tab-spf">
+        <article class="journal-card">
+          <img src="images/SPF.jpg" alt="Skincare cream and serum" loading="lazy">
+          <div class="journal-card-body">
+            <span class="eyebrow">Sun protection</span>
+            <h3>Your Daily SPF Reminder</h3>
+            <p>Sun protection is an indispensable foundation of healthy skin. Broad-spectrum SPF guards against ultraviolet exposure on overcast days and behind window glass, preserving hydration and long-term elasticity.</p>
+            <a class="text-link" href="blog.html">Read full journal entry&nbsp; →</a>
+          </div>
+        </article>
       </div>
     </section>
 
@@ -311,11 +434,10 @@
     </div>
   </footer>
 
-  <!-- Back to top button -->
   <button class="back-to-top" aria-label="Scroll back to top">↑</button>
 
   <script>
-    // Mobile Menu Toggle
+    // Mobile navigation toggle
     const menuButton = document.querySelector('.menu-toggle');
     const navigation = document.querySelector('#navigation');
     
@@ -329,10 +451,10 @@
       menuButton.setAttribute('aria-expanded', 'false');
     }));
 
-    // Update Footer Year
+    // Dynamic copyright year
     document.querySelector('#year').textContent = new Date().getFullYear();
     
-    // Newsletter Form Submission Feedback
+    // Newsletter submission handler
     document.querySelector('#newsletter-form').addEventListener('submit', event => {
       event.preventDefault();
       const messageEl = document.querySelector('#form-message');
@@ -340,9 +462,7 @@
       messageEl.textContent = 'Thanks for your interest! This demo form is not connected to an email service yet.';
     });
 
-    // --- NEW INTERACTIVE FEATURES ---
-
-    // 1. Sticky Header Shadow on Scroll
+    // Sticky header shadow on scroll
     const header = document.getElementById('header');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 10) {
@@ -352,33 +472,32 @@
       }
     });
 
-    // 2. Scroll Reveal Animations Using Intersection Observer
+    // Scroll reveal animation observer
     const revealElements = document.querySelectorAll('.reveal');
     const revealObserver = new IntersectionObserver((entries, observer) => {
       entries.forEach(entry => {
         if (entry.isIntersecting) {
           entry.target.classList.add('active');
-          observer.unobserve(entry.target); // Only animate once
+          observer.unobserve(entry.target);
         }
       });
     }, {
       root: null,
-      threshold: 0.15, // Trigger when 15% of the element is visible
+      threshold: 0.15,
       rootMargin: "0px 0px -50px 0px"
     });
 
     revealElements.forEach(el => revealObserver.observe(el));
     
-    // Fallback: Show elements immediately if user loads already scrolled down
     window.addEventListener('load', () => {
-        revealElements.forEach(el => {
-            if(el.getBoundingClientRect().top < window.innerHeight) {
-                el.classList.add('active');
-            }
-        })
+      revealElements.forEach(el => {
+        if (el.getBoundingClientRect().top < window.innerHeight) {
+          el.classList.add('active');
+        }
+      });
     });
 
-    // 3. Back to Top Button Logic
+    // Back-to-top button
     const backToTopBtn = document.querySelector('.back-to-top');
     window.addEventListener('scroll', () => {
       if (window.scrollY > 600) {
@@ -390,6 +509,31 @@
 
     backToTopBtn.addEventListener('click', () => {
       window.scrollTo({ top: 0, behavior: 'smooth' });
+    });
+
+    // In-page Tab Switcher for The Glow Journal
+    const tabButtons = document.querySelectorAll('.journal-tab-btn');
+    const tabPanels = document.querySelectorAll('.journal-panel');
+
+    tabButtons.forEach(button => {
+      button.addEventListener('click', () => {
+        tabButtons.forEach(btn => {
+          btn.classList.remove('active');
+          btn.setAttribute('aria-selected', 'false');
+        });
+        tabPanels.forEach(panel => {
+          panel.classList.remove('active');
+        });
+
+        button.classList.add('active');
+        button.setAttribute('aria-selected', 'true');
+        
+        const targetPanelId = button.getAttribute('aria-controls');
+        const targetPanel = document.getElementById(targetPanelId);
+        if (targetPanel) {
+          targetPanel.classList.add('active');
+        }
+      });
     });
   </script>
 </body>
