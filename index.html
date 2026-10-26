@@ -412,15 +412,12 @@
       </div>
     </section>
 
-    <section class="newsletter reveal" id="contact">
+   <section class="newsletter reveal" id="contact">
       <span class="eyebrow">A little note for your skin</span>
       <h2>Make Time for Your Glow</h2>
       <p>Get simple skincare inspiration and gentle reminders for your daily routine.</p>
-      <form id="newsletter-form">
-        <input type="email" id="email" placeholder="Your email address" aria-label="Your email address" required>
-        <button type="submit">Sign me up</button>
-      </form>
-      <p id="form-message" role="status" aria-live="polite" style="margin-top: 15px;"></p>
+      <!-- Formularz Klaviyo -->
+      <div class="klaviyo-form-TEZQMG"></div>
     </section>
   </main>
 
@@ -451,14 +448,6 @@
 
     // Dynamic copyright year
     document.querySelector('#year').textContent = new Date().getFullYear();
-    
-    // Newsletter submission handler
-    document.querySelector('#newsletter-form').addEventListener('submit', event => {
-      event.preventDefault();
-      const messageEl = document.querySelector('#form-message');
-      messageEl.style.color = '#dce3d7';
-      messageEl.textContent = 'Thanks for your interest! This demo form is not connected to an email service yet.';
-    });
 
     // Sticky header shadow on scroll
     const header = document.getElementById('header');
