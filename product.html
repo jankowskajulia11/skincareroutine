@@ -379,6 +379,10 @@
   </footer>
 
   <script>
+    // Initialize Klaviyo queue buffer
+    var _learnq = window._learnq || [];
+
+    // Product catalog data
     const products = {
       "SERUM-001": {
         id: "SERUM-001",
@@ -398,6 +402,7 @@
       }
     };
 
+    // Cart state management via localStorage
     let cart = JSON.parse(localStorage.getItem('glow_cart') || '[]');
 
     function saveCart() {
@@ -434,14 +439,20 @@
       saveCart();
       openCart();
 
-      if (window.klaviyo && products[productId]) {
-        const item = products[productId];
-        window.klaviyo.push(['track', 'Added to Cart', {
-          ProductID: item.id,
-          ProductName: item.title,
-          ItemPrice: item.price,
-          ImageURL: window.location.origin + '/' + item.image,
-          URL: window.location.href
+      // Klaviyo Added to Cart Tracking
+      const item = products[productId];
+      if (item) {
+        const fullImageUrl = new URL(item.image, window.location.href).href;
+        _learnq.push(['track', 'Added to Cart', {
+          '$value': item.price,
+          'ProductID': item.id,
+          'SKU': item.id,
+          'ProductName': item.title,
+          'ItemPrice': item.price,
+          'RowTotal': item.price,
+          'ImageURL': fullImageUrl,
+          'URL': window.location.href,
+          'Categories': [item.category]
         }]);
       }
     }
@@ -502,10 +513,12 @@
       `).join('');
     }
 
+    // Attach Cart Drawer listeners
     document.getElementById('open-cart-btn').addEventListener('click', openCart);
     document.getElementById('close-cart-btn').addEventListener('click', closeCart);
     document.getElementById('cart-overlay').addEventListener('click', closeCart);
 
+    // Route view between single product and catalog grid
     const displayContainer = document.getElementById('display-container');
     const breadcrumb = document.getElementById('breadcrumb-area');
     const urlParams = new URLSearchParams(window.location.search);
@@ -513,6 +526,9 @@
 
     if (selectedId && products[selectedId]) {
       const item = products[selectedId];
+      const fullImageUrl = new URL(item.image, window.location.href).href;
+      const fullProductUrl = window.location.href;
+
       document.title = `${item.title} — Glow & Care`;
       breadcrumb.innerHTML = `<a href="index.html">Home</a> &nbsp;/&nbsp; <a href="product.html">Products</a> &nbsp;/&nbsp; <span>${item.title}</span>`;
 
@@ -532,15 +548,39 @@
         </article>
       `;
 
-      if (window.klaviyo) {
-        window.klaviyo.push(['track', 'Viewed Product', {
-          ProductID: item.id,
-          ProductName: item.title,
-          ItemPrice: item.price,
-          ImageURL: window.location.origin + '/' + item.image,
-          URL: window.location.href
-        }]);
-      }
+      // Klaviyo Viewed Product Tracking
+      const klaviyoItem = {
+        "Title": item.title,
+        "ItemId": item.id,
+        "Categories": [item.category],
+        "ImageUrl": fullImageUrl,
+        "Url": fullProductUrl,
+        "Metadata": {
+          "Brand": "Glow & Care",
+          "Price": item.price,
+          "CompareAtPrice": item.price
+        }
+      };
+
+      _learnq.push(['track', 'Viewed Product', {
+        'Title': item.title,
+        'ItemId': item.id,
+        'ProductID': item.id,
+        'ProductName': item.title,
+        'Categories': [item.category],
+        'ImageUrl': fullImageUrl,
+        'ImageURL': fullImageUrl,
+        'Url': fullProductUrl,
+        'URL': fullProductUrl,
+        'Price': item.price,
+        'ItemPrice': item.price,
+        'Metadata': {
+          'Brand': 'Glow & Care',
+          'Price': item.price
+        }
+      }]);
+
+      _learnq.push(['trackViewedItem', klaviyoItem]);
 
     } else {
       document.title = "Our Products — Glow & Care";
