@@ -40,7 +40,7 @@
     .container { width: min(1160px, calc(100% - 40px)); margin: auto; }
     
     header {
-      position: sticky; top: 0; z-index: 10;
+      position: sticky; top: 0; z-index: 100;
       background: rgba(255,253,248,.95);
       border-bottom: 1px solid rgba(25,54,50,.08);
       backdrop-filter: blur(12px);
@@ -54,15 +54,54 @@
     .brand { text-decoration: none; font: 30px Georgia, serif; letter-spacing: -.8px; white-space: nowrap; transition: transform 0.3s ease; }
     .brand:hover { transform: scale(1.02); }
     .brand small { display: block; font: 9px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
-    nav { display: flex; gap: 27px; align-items: center; }
+    nav { display: flex; gap: 22px; align-items: center; }
     nav a { text-decoration: none; font-size: 12px; position: relative; }
-    nav a::after {
+    nav a:not(.cart-nav-link)::after {
       content: ''; position: absolute; width: 0; height: 1px;
       bottom: -3px; left: 0; background-color: var(--sage);
       transition: width 0.3s ease;
     }
-    nav a:hover::after { width: 100%; }
+    nav a:not(.cart-nav-link):hover::after { width: 100%; }
     nav a:hover, .text-link:hover { color: var(--sage); }
+
+    /* Cart Button in Navigation */
+    .cart-nav-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      background: var(--cream);
+      border: 1px solid var(--line);
+      padding: 6px 14px;
+      border-radius: 20px;
+      font-weight: bold;
+      font-size: 12px;
+      color: var(--ink);
+      text-decoration: none;
+      transition: all 0.3s ease;
+    }
+    .cart-nav-link:hover {
+      background: var(--sage-dark);
+      color: white !important;
+      border-color: var(--sage-dark);
+    }
+    .cart-nav-link span {
+      background: var(--sage-dark);
+      color: white;
+      border-radius: 50%;
+      min-width: 18px;
+      height: 18px;
+      padding: 0 4px;
+      font-size: 10px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      transition: background 0.3s, color 0.3s;
+    }
+    .cart-nav-link:hover span {
+      background: white;
+      color: var(--ink);
+    }
+
     .menu-toggle { display: none; border: 1px solid var(--line); background: transparent; color: var(--ink); padding: 8px 12px; border-radius: 5px; cursor: pointer; transition: background 0.3s ease; }
     .menu-toggle:hover { background: var(--cream); }
     
@@ -225,7 +264,7 @@
     
     footer { padding: 26px 0; background: #f2f0e9; }
     .footer-inner { display: flex; justify-content: space-between; align-items: center; gap: 20px; color: var(--muted); font-size: 11px; }
-    .footer-links { display: flex; gap: 18px; }
+    .footer-links { display: flex; gap: 18px; align-items: center; }
     .footer-links a { text-decoration: none; transition: color 0.3s; }
     .footer-links a:hover { color: var(--ink); }
 
@@ -254,6 +293,7 @@
         from { opacity: 0; transform: translateY(-10px); }
         to { opacity: 1; transform: translateY(0); }
       }
+      .cart-nav-link { width: 100%; justify-content: space-between; }
       .hero { grid-template-columns: 1fr; }
       .hero-copy { padding: 55px 25px; }
       .hero-image { min-height: 300px; }
@@ -293,11 +333,14 @@
         <a href="#about">About</a>
         <a href="#routine">Skincare Routine</a>
         <a href="#ingredients">Ingredients</a>
-       <a href="product.html">Products</a>
+        <a href="product.html">Products</a>
         <a href="blog.html">Blog</a>
         <a href="information.html">Information</a>
         <a href="account.html">Account</a>
         <a href="#contact">Contact</a>
+        <a href="cart.html" class="cart-nav-link" aria-label="View Shopping Bag">
+          Bag <span id="home-cart-badge">0</span>
+        </a>
       </nav>
     </div>
   </header>
@@ -472,6 +515,7 @@
       <span>© <span id="year"></span> Glow &amp; Care. Made with care.</span>
       <div class="footer-links">
         <a href="product.html">Products</a>
+        <a href="cart.html">Bag</a>
         <a href="information.html">Information</a>
         <a href="blog.html">Blog</a>
         <a href="account.html">Account</a>
@@ -483,6 +527,22 @@
   <button class="back-to-top" aria-label="Scroll back to top">↑</button>
 
   <script>
+    // Cart Count Synchronization
+    function updateCartBadge() {
+      try {
+        const cart = JSON.parse(localStorage.getItem('glow_cart') || '[]');
+        const count = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+        const badge = document.getElementById('home-cart-badge');
+        if (badge) badge.textContent = count;
+      } catch (err) {
+        console.error(err);
+      }
+    }
+
+    updateCartBadge();
+    window.addEventListener('storage', updateCartBadge);
+    window.addEventListener('pageshow', updateCartBadge);
+
     // Mobile navigation toggle
     const menuButton = document.querySelector('.menu-toggle');
     const navigation = document.querySelector('#navigation');
