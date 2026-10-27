@@ -129,7 +129,7 @@
     .ingredient:hover h3 { color: var(--sage-dark); }
     .ingredient p { font-size: 10px; color: var(--muted); margin: 0; }
     
-    /* Blog Tab Switcher Styles */
+    /* Blog & Products Tab Switcher Styles */
     .blog { padding: 55px 0; }
     .journal-tab-nav {
       display: flex;
@@ -215,11 +215,12 @@
       margin-bottom: 22px;
     }
     
-.newsletter { 
-      background: var(--cream); /* Changed to the ivory/beige used on the site */
-      color: var(--ink); /* Changed text color to dark green so it's readable on the light background */
-      padding: 48px 20px; 
-      border-top: 1px solid var(--line); /* Optional: adds a subtle line to separate it from the section above */
+    /* Updated Beige / Ivory Newsletter Section */
+    .newsletter { 
+      background: var(--cream); 
+      color: var(--ink); 
+      padding: 56px 20px; 
+      border-top: 1px solid var(--line);
     }
     
     footer { padding: 26px 0; background: #f2f0e9; }
@@ -288,8 +289,15 @@
       <a class="brand" href="#home">Glow &amp; Care<small>Healthy skin. Happy you.</small></a>
       <button class="menu-toggle" aria-label="Toggle navigation" aria-expanded="false">Menu ☰</button>
       <nav id="navigation">
-        <a href="#home">Home</a><a href="#about">About</a><a href="#routine">Skincare Routine</a>
-        <a href="#ingredients">Ingredients</a><a href="blog.html">Blog</a><a href="information.html">Information</a><a href="account.html">Account</a><a href="#contact">Contact</a>
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#routine">Skincare Routine</a>
+        <a href="#ingredients">Ingredients</a>
+        <a href="#blog">Products</a>
+        <a href="blog.html">Blog</a>
+        <a href="information.html">Information</a>
+        <a href="account.html">Account</a>
+        <a href="#contact">Contact</a>
       </nav>
     </div>
   </header>
@@ -352,7 +360,7 @@
       </div>
     </section>
 
-    <!-- The Glow Journal: Interactive Tab Switcher -->
+    <!-- The Glow Journal & Products: Interactive Tab Switcher -->
     <section class="container blog" id="blog">
       <div class="section-heading reveal">
         <div>
@@ -366,6 +374,7 @@
         <button class="journal-tab-btn active" role="tab" aria-selected="true" aria-controls="panel-routine" id="tab-routine">Daily Care</button>
         <button class="journal-tab-btn" role="tab" aria-selected="false" aria-controls="panel-listen" id="tab-listen">Skin Basics</button>
         <button class="journal-tab-btn" role="tab" aria-selected="false" aria-controls="panel-spf" id="tab-spf">Sun Protection</button>
+        <button class="journal-tab-btn" role="tab" aria-selected="false" aria-controls="panel-products" id="tab-products">Our Products</button>
       </div>
 
       <!-- Tab Panel 1: Routine -->
@@ -406,9 +415,44 @@
           </div>
         </article>
       </div>
+
+      <!-- Tab Panel 4: Products -->
+      <div class="journal-panel" id="panel-products" role="tabpanel" aria-labelledby="tab-products">
+        <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 24px;">
+          
+          <!-- Product 1: Serum -->
+          <article class="journal-card" style="grid-template-columns: 1fr; gap: 0;">
+            <img src="images/serum1.jpg" alt="Hydrating Glow Serum" loading="lazy" style="height: 250px; width: 100%; object-fit: cover;">
+            <div class="journal-card-body" style="padding: 24px 28px;">
+              <span class="eyebrow">Targeted Serum</span>
+              <h3 style="font-size: 22px; margin: 6px 0 10px;">Hydrating Glow Serum</h3>
+              <p style="font-size: 13px; margin-bottom: 18px; color: var(--muted);">Infused with active botanicals to strengthen your moisture barrier, even skin texture, and restore natural glow.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: var(--ink); font-size: 16px;">$28.00</strong>
+                <a class="button" href="#contact" style="padding: 8px 16px; font-size: 12px;">Explore&nbsp; →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- Product 2: Soothing Cream -->
+          <article class="journal-card" style="grid-template-columns: 1fr; gap: 0;">
+            <img src="images/Soothingcream.jpg" alt="Barrier Soothing Cream" loading="lazy" style="height: 250px; width: 100%; object-fit: cover;">
+            <div class="journal-card-body" style="padding: 24px 28px;">
+              <span class="eyebrow">Daily Moisture</span>
+              <h3 style="font-size: 22px; margin: 6px 0 10px;">Barrier Soothing Cream</h3>
+              <p style="font-size: 13px; margin-bottom: 18px; color: var(--muted);">A calming, deeply nourishing cream designed to lock in hydration and comfort dry or sensitive skin.</p>
+              <div style="display: flex; justify-content: space-between; align-items: center;">
+                <strong style="color: var(--ink); font-size: 16px;">$32.00</strong>
+                <a class="button" href="#contact" style="padding: 8px 16px; font-size: 12px;">Explore&nbsp; →</a>
+              </div>
+            </div>
+          </article>
+
+        </div>
+      </div>
     </section>
 
-    <!-- Klaviyo Embedded Section -->
+    <!-- Klaviyo Embedded Section with Ivory/Beige Background -->
     <section class="newsletter reveal" id="contact">
       <div class="klaviyo-form-TEZQMG"></div>
     </section>
@@ -418,7 +462,13 @@
     <div class="container footer-inner">
       <a class="brand" href="#home">Glow &amp; Care<small>Healthy skin. Happy you.</small></a>
       <span>© <span id="year"></span> Glow &amp; Care. Made with care.</span>
-      <div class="footer-links"><a href="information.html">Information</a><a href="blog.html">Blog</a><a href="account.html">Account</a><a href="#contact">Contact</a></div>
+      <div class="footer-links">
+        <a href="#blog">Products</a>
+        <a href="information.html">Information</a>
+        <a href="blog.html">Blog</a>
+        <a href="account.html">Account</a>
+        <a href="#contact">Contact</a>
+      </div>
     </div>
   </footer>
 
@@ -491,7 +541,7 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     });
 
-    // In-page Tab Switcher for The Glow Journal
+    // In-page Tab Switcher for The Glow Journal & Products
     const tabButtons = document.querySelectorAll('.journal-tab-btn');
     const tabPanels = document.querySelectorAll('.journal-panel');
 
