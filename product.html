@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Products — Glow &amp; Care</title>
+  <style>
+    :root {
+      --ink: #193632;
+      --sage: #62796d;
+      --sage-dark: #405b4f;
+      --cream: #f7f5ef;
+      --paper: #fffdf8;
+      --muted: #66716a;
+      --line: #dedfd4;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: Arial, Helvetica, sans-serif;
+      line-height: 1.6;
+    }
+    a { color: inherit; text-decoration: none; transition: color 0.3s ease; }
+    .container { width: min(1160px, calc(100% - 40px)); margin: auto; }
+
+    /* Header & Nav */
+    header {
+      position: sticky; top: 0; z-index: 10;
+      background: rgba(255,253,248,.95);
+      border-bottom: 1px solid rgba(25,54,50,.08);
+      backdrop-filter: blur(12px);
+    }
+    .nav { min-height: 76px; display: flex; align-items: center; justify-content: space-between; gap: 24px; }
+    .brand { font: 30px Georgia, serif; letter-spacing: -.8px; white-space: nowrap; }
+    .brand small { display: block; font: 9px Arial, sans-serif; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    nav { display: flex; gap: 24px; align-items: center; }
+    nav a { font-size: 13px; position: relative; }
+    nav a:hover { color: var(--sage); }
+
+    /* Page Content */
+    .page-wrapper { padding: 48px 0 80px; }
+    .breadcrumb { font-size: 13px; color: var(--muted); margin-bottom: 28px; }
+    .breadcrumb a:hover { color: var(--ink); text-decoration: underline; }
+
+    .eyebrow { color: var(--sage); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; }
+    h1, h2 { font-family: Georgia, serif; font-weight: 400; }
+    
+    /* Single Product Detail View */
+    .product-detail {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 52px;
+      align-items: center;
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 44px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+    }
+    .product-detail img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    .product-detail h1 {
+      font-size: clamp(30px, 3.5vw, 40px);
+      margin: 8px 0 14px;
+      line-height: 1.15;
+    }
+    .product-detail .price {
+      font-size: 24px;
+      font-weight: bold;
+      color: var(--ink);
+      margin-bottom: 18px;
+      display: block;
+    }
+    .product-detail p {
+      font-size: 15px;
+      color: var(--muted);
+      line-height: 1.8;
+      margin-bottom: 28px;
+    }
+
+    /* All Products Grid View (when no product is selected) */
+    .catalog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 24px;
+    }
+    .catalog-card {
+      background: white;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow 0.3s ease, transform 0.3s ease;
+    }
+    .catalog-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(25,54,50,0.08);
+    }
+    .catalog-card img {
+      width: 100%;
+      height: 260px;
+      object-fit: cover;
+    }
+    .catalog-card-body {
+      padding: 26px 28px;
+      display: flex;
+      flex-direction: column;
+      flex-grow: 1;
+    }
+    .catalog-card-body h3 {
+      font: 24px Georgia, serif;
+      margin: 6px 0 10px;
+    }
+    .catalog-card-body p {
+      font-size: 13px;
+      color: var(--muted);
+      flex-grow: 1;
+      margin-bottom: 20px;
+    }
+
+    .button {
+      display: inline-block;
+      background: var(--sage-dark);
+      color: white;
+      padding: 12px 24px;
+      font-size: 13px;
+      border-radius: 4px;
+      text-align: center;
+      transition: background 0.3s ease;
+    }
+    .button:hover { background: var(--ink); }
+
+    /* Footer */
+    footer { padding: 30px 0; background: #f2f0e9; margin-top: 60px; font-size: 11px; color: var(--muted); }
+    .footer-inner { display: flex; justify-content: space-between; align-items: center; }
+
+    @media (max-width: 800px) {
+      .product-detail { grid-template-columns: 1fr; padding: 24px; gap: 28px; }
+      .product-detail img { height: 280px; }
+      nav { display: none; }
+    }
+  </style>
+  <script async type="text/javascript" src="//static.klaviyo.com/onsite/js/UzRTeF/klaviyo.js"></script>
+</head>
+<body>
+
+  <header>
+    <div class="container nav">
+      <a class="brand" href="index.html">Glow &amp; Care<small>Healthy skin. Happy you.</small></a>
+      <nav>
+        <a href="index.html">Home</a>
+        <a href="index.html#routine">Routine</a>
+        <a href="product.html" style="color: var(--sage); font-weight: bold;">Products</a>
+        <a href="blog.html">Blog</a>
+        <a href="information.html">Information</a>
+        <a href="account.html">Account</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="container page-wrapper">
+    <div class="breadcrumb" id="breadcrumb-area">
+      <a href="index.html">Home</a> &nbsp;/&nbsp; <span>Products</span>
+    </div>
+
+    <div id="display-container">
+      <!-- Injected dynamically via script -->
+    </div>
+  </main>
+
+  <footer>
+    <div class="container footer-inner">
+      <span>© Glow &amp; Care. Made with care.</span>
+      <a href="index.html#contact">Contact</a>
+    </div>
+  </footer>
+
+  <script>
+    // Product catalog data
+    const products = {
+      "SERUM-001": {
+        id: "SERUM-001",
+        title: "Hydrating Glow Serum",
+        category: "Targeted Serum",
+        price: 28.00,
+        image: "images/serum1.jpg",
+        description: "Infused with active botanicals, this lightweight serum penetrates deeply to reinforce your moisture barrier, soothe inflammation, and restore natural luminosity without feeling greasy. Formulated for daily morning and night application across all skin types."
+      },
+      "CREAM-001": {
+        id: "CREAM-001",
+        title: "Barrier Soothing Cream",
+        category: "Daily Moisture",
+        price: 32.00,
+        image: "images/Soothingcream.jpg",
+        description: "A rich, deeply replenishing moisturizer crafted to lock in lasting hydration. Enriched with skin-identical lipids, it shields against environmental stressors, prevents trans-epidermal water loss, and provides all-day relief for sensitive or dry complexions."
+      }
+    };
+
+    const container = document.getElementById('display-container');
+    const breadcrumb = document.getElementById('breadcrumb-area');
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedId = urlParams.get('id');
+
+    if (selectedId && products[selectedId]) {
+      // 1. Show Single Product Detail Page
+      const item = products[selectedId];
+      document.title = `${item.title} — Glow & Care`;
+      breadcrumb.innerHTML = `<a href="index.html">Home</a> &nbsp;/&nbsp; <a href="product.html">Products</a> &nbsp;/&nbsp; <span>${item.title}</span>`;
+
+      container.innerHTML = `
+        <article class="product-detail">
+          <img src="${item.image}" alt="${item.title}">
+          <div>
+            <span class="eyebrow">${item.category}</span>
+            <h1>${item.title}</h1>
+            <span class="price">$${item.price.toFixed(2)}</span>
+            <p>${item.description}</p>
+            <div style="display:flex; gap:14px; flex-wrap:wrap;">
+              <a class="button" href="index.html#contact">Inquire &amp; Join Waitlist &nbsp;→</a>
+              <a class="button" href="product.html" style="background:transparent; color:var(--ink); border:1px solid var(--line);">View All Products</a>
+            </div>
+          </div>
+        </article>
+      `;
+
+      // Klaviyo Viewed Product tracking
+      if (window.klaviyo) {
+        window.klaviyo.push(['track', 'Viewed Product', {
+          ProductID: item.id,
+          ProductName: item.title,
+          ItemPrice: item.price,
+          ImageURL: window.location.origin + '/' + item.image,
+          URL: window.location.href
+        }]);
+      }
+
+    } else {
+      // 2. Show Catalog Grid (All Products)
+      document.title = "Our Products — Glow & Care";
+      container.innerHTML = `
+        <div>
+          <span class="eyebrow">The Collection</span>
+          <h1 style="font-size:36px; margin: 8px 0 20px;">Curated Everyday Essentials</h1>
+        </div>
+        <div class="catalog-grid">
+          ${Object.values(products).map(item => `
+            <article class="catalog-card">
+              <a href="product.html?id=${item.id}"><img src="${item.image}" alt="${item.title}"></a>
+              <div class="catalog-card-body">
+                <span class="eyebrow">${item.category}</span>
+                <h3><a href="product.html?id=${item.id}">${item.title}</a></h3>
+                <p>${item.description}</p>
+                <div style="display:flex; justify-content:space-between; align-items:center;">
+                  <strong style="font-size:18px;">$${item.price.toFixed(2)}</strong>
+                  <a class="button" href="product.html?id=${item.id}">View Details &nbsp;→</a>
+                </div>
+              </div>
+            </article>
+          `).join('')}
+        </div>
+      `;
+    }
+  </script>
+</body>
+</html>
