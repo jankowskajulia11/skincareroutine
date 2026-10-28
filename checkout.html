@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Glow & Care</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts for an elegant, modern feel -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Outfit', 'sans-serif'],
+                    },
+                    colors: {
+                        brand: {
+                            light: '#fbf9f6', // Soft beige background
+                            DEFAULT: '#8c8070', // Earthy tone
+                            dark: '#4a443a', // Deep contrasting text
+                            accent: '#e6dfd3', // Borders and soft backgrounds
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            background-color: #fbf9f6;
+            color: #4a443a;
+        }
+        /* Custom scrollbar for a cleaner look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #fbf9f6;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #e6dfd3;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #d4cbb8;
+        }
+        
+        /* Input focus transitions */
+        input:focus {
+            outline: none;
+            border-color: #8c8070;
+            box-shadow: 0 0 0 1px #8c8070;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-brand selection:text-white">
+
+    <!-- Header -->
+    <header class="py-6 bg-white border-b border-brand-accent/50 sticky top-0 z-10">
+        <div class="max-w-6xl mx-auto px-4 md:px-8 flex justify-center items-center relative">
+            <a href="#" class="text-3xl font-light tracking-widest text-brand-dark uppercase">Glow & Care</a>
+            <div class="absolute right-4 md:right-8 flex items-center text-sm text-brand/80">
+                <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+                Secure Checkout
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-6xl mx-auto px-4 md:px-8 py-8 md:py-12">
+        <div class="flex flex-col-reverse lg:flex-row gap-12 relative">
+            
+            <!-- Left Column: Forms -->
+            <div class="w-full lg:w-3/5 space-y-10">
+                <form id="checkoutForm" onsubmit="handleCheckout(event)">
+                    
+                    <!-- Contact Information -->
+                    <section>
+                        <h2 class="text-xl font-medium mb-4 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-brand-dark text-white flex items-center justify-center text-xs mr-3">1</span>
+                            Contact Information
+                        </h2>
+                        <div class="space-y-4">
+                            <div>
+                                <label for="email" class="sr-only">Email address</label>
+                                <input type="email" id="email" required placeholder="Email address" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="flex items-center space-x-2">
+                                <input type="checkbox" id="newsletter" class="w-4 h-4 text-brand-dark rounded border-brand-accent focus:ring-brand-dark accent-brand-dark">
+                                <label for="newsletter" class="text-sm text-brand-dark/80">Email me with news and offers</label>
+                            </div>
+                        </div>
+                    </section>
+
+                    <hr class="border-brand-accent/50 my-8">
+
+                    <!-- Shipping Address -->
+                    <section>
+                        <h2 class="text-xl font-medium mb-4 flex items-center">
+                            <span class="w-6 h-6 rounded-full bg-brand-dark text-white flex items-center justify-center text-xs mr-3">2</span>
+                            Shipping Address
+                        </h2>
+                        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                            <div class="md:col-span-1">
+                                <label for="firstName" class="sr-only">First name</label>
+                                <input type="text" id="firstName" required placeholder="First name" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label for="lastName" class="sr-only">Last name</label>
+                                <input type="text" id="lastName" required placeholder="Last name" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="address" class="sr-only">Address</label>
+                                <input type="text" id="address" required placeholder="Address" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="md:col-span-2">
+                                <label for="apartment" class="sr-only">Apartment, suite, etc. (optional)</label>
+                                <input type="text" id="apartment" placeholder="Apartment, suite, etc. (optional)" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label for="city" class="sr-only">City</label>
+                                <input type="text" id="city" required placeholder="City" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                            <div class="md:col-span-1">
+                                <label for="zip" class="sr-only">ZIP code</label>
+                                <input type="text" id="zip" required placeholder="ZIP code" class="w-full p-3 bg-white border border-brand-accent rounded-lg text-brand-dark placeholder-brand-dark/40 transition-all">
+                            </div>
+                        </div>
+                    </section>
+
+                    <!-- Submit Button -->
+                    <div class="mt-10">
+                        <button type="submit" class="w-full bg-brand-dark text-white text-lg py-4 rounded-lg font-medium hover:bg-[#38332b] transition-all transform active:scale-[0.99] shadow-lg shadow-brand-dark/20 flex justify-center items-center">
+                            <span>Continue to Payment</span>
+                            <svg class="w-5 h-5 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+                        </button>
+                        <p class="text-center text-xs text-brand-dark/60 mt-4">You will be redirected to a secure payment gateway in the next step.</p>
+                    </div>
+                </form>
+            </div>
+
+            <!-- Right Column: Order Summary -->
+            <div class="w-full lg:w-2/5">
+                <!-- Sticky Container -->
+                <div class="bg-white p-6 md:p-8 rounded-2xl border border-brand-accent shadow-sm lg:sticky lg:top-32">
+                    <h2 class="text-xl font-medium mb-6">Order Summary</h2>
+                    
+                    <!-- Products -->
+                    <div class="space-y-6 mb-6">
+                        <!-- Product 1 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <img src="https://placehold.co/150x150/e6dfd3/4a443a?text=Serum" alt="Hydrating Glow Serum" class="w-16 h-16 object-cover rounded-lg border border-brand-accent">
+                                    <span class="absolute -top-2 -right-2 bg-brand-dark text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-brand-dark text-sm">Hydrating Glow Serum</h3>
+                                    <p class="text-brand-dark/60 text-xs mt-1">30ml / 1 oz</p>
+                                </div>
+                            </div>
+                            <span class="font-medium">$42.00</span>
+                        </div>
+                        
+                        <!-- Product 2 -->
+                        <div class="flex items-center justify-between">
+                            <div class="flex items-center space-x-4">
+                                <div class="relative">
+                                    <img src="https://placehold.co/150x150/e6dfd3/4a443a?text=Cream" alt="Barrier Soothing Cream" class="w-16 h-16 object-cover rounded-lg border border-brand-accent">
+                                    <span class="absolute -top-2 -right-2 bg-brand-dark text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">1</span>
+                                </div>
+                                <div>
+                                    <h3 class="font-medium text-brand-dark text-sm">Barrier Soothing Cream</h3>
+                                    <p class="text-brand-dark/60 text-xs mt-1">50ml / 1.7 oz</p>
+                                </div>
+                            </div>
+                            <span class="font-medium">$38.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Discount Code -->
+                    <div class="flex space-x-2 border-y border-brand-accent py-6 mb-6">
+                        <input type="text" placeholder="Gift card or discount code" class="flex-1 p-3 bg-brand-light border border-brand-accent rounded-lg text-sm focus:outline-none focus:border-brand-dark transition-colors">
+                        <button class="bg-brand-accent text-brand-dark px-4 py-3 rounded-lg text-sm font-medium hover:bg-[#d4cbb8] transition-colors">Apply</button>
+                    </div>
+
+                    <!-- Totals -->
+                    <div class="space-y-3 text-sm">
+                        <div class="flex justify-between text-brand-dark/80">
+                            <span>Subtotal</span>
+                            <span class="font-medium text-brand-dark">$80.00</span>
+                        </div>
+                        <div class="flex justify-between text-brand-dark/80">
+                            <span>Shipping</span>
+                            <span class="font-medium text-brand-dark">Calculated at next step</span>
+                        </div>
+                        <div class="flex justify-between text-brand-dark/80">
+                            <span>Taxes</span>
+                            <span class="font-medium text-brand-dark">$0.00</span>
+                        </div>
+                    </div>
+
+                    <div class="flex justify-between items-end mt-6 pt-6 border-t border-brand-accent">
+                        <span class="text-lg font-medium">Total</span>
+                        <div class="text-right">
+                            <span class="text-xs text-brand-dark/60 mr-1">USD</span>
+                            <span class="text-2xl font-semibold">$80.00</span>
+                        </div>
+                    </div>
+
+                    <!-- Guarantees -->
+                    <div class="mt-8 grid grid-cols-3 gap-2 text-center border-t border-brand-accent pt-6">
+                        <div class="flex flex-col items-center text-xs text-brand-dark/70">
+                            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+                            Free Shipping over $50
+                        </div>
+                        <div class="flex flex-col items-center text-xs text-brand-dark/70 border-x border-brand-accent/50 px-2">
+                            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            30-Day Returns
+                        </div>
+                        <div class="flex flex-col items-center text-xs text-brand-dark/70">
+                            <svg class="w-5 h-5 mb-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"></path></svg>
+                            Secure Checkout
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="mt-12 py-8 border-t border-brand-accent text-center text-sm text-brand-dark/60">
+        <div class="max-w-6xl mx-auto px-4">
+            <p>&copy; 2026 Glow & Care. All rights reserved.</p>
+            <div class="mt-2 space-x-4">
+                <a href="#" class="hover:text-brand-dark transition-colors">Refund Policy</a>
+                <a href="#" class="hover:text-brand-dark transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-brand-dark transition-colors">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Success Modal Overlay (Hidden by default) -->
+    <div id="successModal" class="fixed inset-0 bg-brand-dark/80 backdrop-blur-sm z-50 hidden flex items-center justify-center opacity-0 transition-opacity duration-300">
+        <div class="bg-white rounded-2xl p-8 max-w-sm w-full mx-4 shadow-2xl transform scale-95 transition-transform duration-300" id="modalContent">
+            <div class="w-16 h-16 bg-[#e6dfd3] rounded-full flex items-center justify-center mx-auto mb-6">
+                <svg class="w-8 h-8 text-brand-dark" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+            </div>
+            <h3 class="text-2xl font-medium text-center mb-2">Almost there!</h3>
+            <p class="text-brand-dark/70 text-center mb-6 text-sm">In a real store, you would now be redirected to a secure payment provider (like Stripe or PayPal) to complete your purchase safely.</p>
+            <button onclick="closeModal()" class="w-full bg-brand-dark text-white py-3 rounded-lg font-medium hover:bg-[#38332b] transition-colors">
+                Got it
+            </button>
+        </div>
+    </div>
+
+    <!-- Interactive Scripts -->
+    <script>
+        // Handle Form Submission
+        function handleCheckout(event) {
+            event.preventDefault();
+            
+            // Show custom modal instead of an alert
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modal.classList.remove('hidden');
+            // Small delay to allow display:block to apply before animating opacity
+            setTimeout(() => {
+                modal.classList.remove('opacity-0');
+                modalContent.classList.remove('scale-95');
+            }, 10);
+        }
+
+        // Close Modal
+        function closeModal() {
+            const modal = document.getElementById('successModal');
+            const modalContent = document.getElementById('modalContent');
+            
+            modal.classList.add('opacity-0');
+            modalContent.classList.add('scale-95');
+            
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.getElementById('checkoutForm').reset(); // Reset form for demo purposes
+            }, 300);
+        }
+    </script>
+</body>
+</html>
